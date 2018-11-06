@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\JsonApi\Items\Schema as Items;
+use Carbon\Carbon;
+
 
 class PostController extends Controller
 {
@@ -22,26 +23,26 @@ class PostController extends Controller
             'site' => 'stackoverflow',
         ]);
 
-        $items = $response->getBody();
+        $items = json_decode($response->getBody(), $assoc=true);
         $out = array();
 
-        foreach ($items as $item) {
+        foreach ($items['items'] as $key => $item) {
             // Cull data so we don't have a massive table
-            $out[]= array(
-                'is_answered' => $item->is_answered,
-                'view_count' => $item->view_count,
-                'answer_count' => $item->answer_count,
-                'score' => $item->score,
-                'last_activity_date' => $item->last_activity_date->toW3cString(),
-                'creation_date' => $item->creation_date->toW3cString(),
-                'link' => $item->link,
-                'title' => $item->title,
-                'reputation' => $item->owner->reputation,
-                'display_name' => $item->owner->display_name,
-                'user_link' => $item->owner->link,
+            $out[] = array(
+                'is_answered' => $item['is_answered'],
+                'view_count' => $item['view_count'],
+                'answer_count' => $item['answer_count'],
+                'score' => $item['score'],
+                'last_activity_date' => Carbon::createFromTimestamp($item['last_activity_date'])->toDateTimeString(),
+                'creation_date' => Carbon::createFromTimestamp($item['creation_date'])->toDateTimeString(),
+                'link' => $item['link'],
+                'title' => $item['title'],
+                'reputation' => $item['owner']['reputation'],
+                'display_name' => $item['owner']['display_name'],
+                'user_link' => $item['owner']['link'],
             );
-
         }
-        return $itemSchema->getAttributes($items);
+
+        return response()->json($out, 200, array(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 }
