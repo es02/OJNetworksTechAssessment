@@ -104,7 +104,7 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable( {
-                "ajax": {"url":"http://localhost:8000/posts","dataSrc":""},
+                "ajax": {"url":"http://oj-networks-test.herokuapp.com/posts","dataSrc":""},
                 "columns": [
                     {
                         "render": function ( data, type, row ) {
