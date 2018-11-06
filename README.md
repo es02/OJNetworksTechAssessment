@@ -20,13 +20,11 @@ composer Install
 php artisan key:generate
 ```
 
-### Usage
+Ensure /public is symlinked to your servers public directory and the storage and bootstrap/cache folders are writable.
 
-TODO: Write something here
+## Usage
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/es02/knapper/tags).
+Browse to the webroot.
 
 ## Authors
 
