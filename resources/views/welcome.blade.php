@@ -104,30 +104,30 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable( {
-                "ajax": 'http://oj-networks-test.herokuapp.com/posts'
-            }
-            columns: [
-            {
-                rowCallback: function( row, data ) {
-                    $('td:eq(7)', row).html( '<a class="link" href="'+data['link']+'">'+data['title']+'</a>'+' ('+data['score']+')' );
-                }
-            },
-            {
-                rowCallback: function( row, data ) {
-                    $('td:eq(7)', row).html( '<a class="link" href="'+data['user_link']+'">'+data['display_name']+'</a>' );
-                }
-            },
-            {
-                data: "creation_date",
-                type: "date"
-            },
-            {
-                data: "last_activity_date",
-                type: "date"
-            },
-            { data: "view_count" },
-            { data: "answer_count" },
-         );
+                "ajax": {"url":"http://localhost:8000/posts","dataSrc":""},
+                "columns": [
+                    {
+                        "render": function ( data, type, row ) {
+                            return '<a class="link" href="'+row['link']+'">'+row['title']+'</a>'+' (Post score: '+row['score']+')'
+                        }
+                    },
+                    {
+                        "render": function ( data, type, row ) {
+                            return '<a class="link" href="'+row['user_link']+'">'+row['display_name']+'</a>'
+                        }
+                    },
+                    {
+                        data: "creation_date",
+                        type: "date"
+                    },
+                    {
+                        data: "last_activity_date",
+                        type: "date"
+                    },
+                    { data: "view_count" },
+                    { data: "answer_count" },
+                ]
+            } );
         } );
     </script>
 </html>
