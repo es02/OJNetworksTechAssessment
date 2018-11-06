@@ -10,6 +10,12 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
+        <!-- Datatables -->
+        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+
         <!-- Styles -->
         <style>
             html, body {
@@ -66,31 +72,62 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div >
+                    <table id="example" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Posted By</th>
+                                <th>Posted</th>
+                                <th>Last Updated</th>
+                                <th>Views</th>
+                                <th>Answers</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Title</th>
+                                <th>Posted By</th>
+                                <th>Posted</th>
+                                <th>Last Updated</th>
+                                <th>Views</th>
+                                <th>Answers</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
     </body>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                "ajax": 'http://oj-networks-test.herokuapp.com/posts'
+            }
+            columns: [
+            {
+                rowCallback: function( row, data ) {
+                    $('td:eq(7)', row).html( '<a class="link" href="'+data['link']+'">'+data['title']+'</a>'+' ('+data['score']+')' );
+                }
+            },
+            {
+                rowCallback: function( row, data ) {
+                    $('td:eq(7)', row).html( '<a class="link" href="'+data['user_link']+'">'+data['display_name']+'</a>' );
+                }
+            },
+            {
+                data: "creation_date",
+                type: "date"
+            },
+            {
+                data: "last_activity_date",
+                type: "date"
+            },
+            { data: "view_count" },
+            { data: "answer_count" },
+         );
+        } );
+    </script>
 </html>
