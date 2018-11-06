@@ -12,6 +12,8 @@
 
         <!-- Datatables -->
         <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
@@ -51,6 +53,10 @@
                 text-align: center;
             }
 
+            .contentleft {
+                text-align: left;
+            }
+
             .title {
                 font-size: 84px;
             }
@@ -68,6 +74,9 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .img {
+                height: 50px;
+            }
         </style>
     </head>
     <body>
@@ -75,7 +84,8 @@
 
             <div class="content">
                 <div >
-                    <table id="example" class="display" style="width:100%">
+                    <div class="m-b-md title">Stack Overflow Top 10 Questions</div>
+                    <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Title</th>
@@ -84,6 +94,7 @@
                                 <th>Last Updated</th>
                                 <th>Views</th>
                                 <th>Answers</th>
+                                <th>Tagged</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -94,6 +105,7 @@
                                 <th>Last Updated</th>
                                 <th>Views</th>
                                 <th>Answers</th>
+                                <th>Tagged</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -113,7 +125,7 @@
                     },
                     {
                         "render": function ( data, type, row ) {
-                            return '<a class="link" href="'+row['user_link']+'">'+row['display_name']+'</a>'
+                            return '<img class="img img-thumbnail rounded float-left" src="'+row['user_image']+'"><a class="link contentleft" href="'+row['user_link']+'">'+row['display_name']+'</a>'
                         }
                     },
                     {
@@ -126,6 +138,7 @@
                     },
                     { data: "view_count" },
                     { data: "answer_count" },
+                    { data: "tags" }
                 ]
             } );
         } );
