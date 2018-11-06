@@ -115,8 +115,10 @@
     </body>
     <script>
         $(document).ready(function() {
+            var str = "{{ request()->getSchemeAndHttpHost() }}/posts";
+            var res = str.replace("http", "https");
             $('#example').DataTable( {
-                "ajax": {"url":"{{ request()->getSchemeAndHttpHost() }}/posts","dataSrc":""},
+                "ajax": {"url":res,"dataSrc":""},
                 "columns": [
                     {
                         "render": function ( data, type, row ) {
