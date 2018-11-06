@@ -27,8 +27,9 @@ class PostController extends Controller
 
         foreach ($items['items'] as $key => $item) {
             // Cull data so we don't have a massive table
+            $tags = implode($item['tags'], ", ");
             $out[] = array(
-                'is_answered' => $item['is_answered'],
+                'tags' => $tags,
                 'view_count' => $item['view_count'],
                 'answer_count' => $item['answer_count'],
                 'score' => $item['score'],
@@ -39,6 +40,7 @@ class PostController extends Controller
                 'reputation' => $item['owner']['reputation'],
                 'display_name' => $item['owner']['display_name'],
                 'user_link' => $item['owner']['link'],
+                'user_image' => $item['owner']['profile_image']
             );
         }
 
