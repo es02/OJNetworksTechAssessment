@@ -89,7 +89,7 @@ return [
     |
     */
     'url' => [
-        'host' => api.stackexchange.com,
+        'host' => 'api.stackexchange.com',
         'namespace' => '/2.2',
         'name' => '2.2:',
     ],
